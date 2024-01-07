@@ -29,12 +29,12 @@ from random import randint
 def is_valid_sub_operands(a: int, b: int) -> bool:
     """
     Whether two numbers are valid subtraction operands.  Two numbers a and b are
-    valid subtraction operands if a >= b.
+    valid subtraction operands if a > b.
 
     @param a The first operand for subtraction.
     @param b The second operand for subtraction.
     """
-    return a >= b
+    return a > b
 
 def random_add_problems() -> list:
     """
