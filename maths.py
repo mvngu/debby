@@ -69,6 +69,23 @@ def random_add_problems() -> list:
     b = simple_b + inter_b + adv_b
     return list(zip(a, b))
 
+def random_div_problems() -> list:
+    """
+    Generate random division problems.
+
+    @returns A list of 2-tuples.  Each tuple contains the operands for a
+        division problem.
+    """
+    low = 2
+    high = 12
+    how_many = 10
+    opa = random_operands(low, high, how_many)
+    while len(opa) != len(set(opa)):
+        opa = random_operands(low, high, how_many)
+    opb = random_operands(low, high, how_many)
+    multiple = [a * b for a, b in zip(opa, opb)]
+    return list(zip(multiple, opa))
+
 def random_mult_problems() -> list:
     """
     Generate random multiplication problems.
@@ -176,6 +193,7 @@ def unique_problems(n: int, kind: str) -> list:
         * "+" -- An addition problem.
         * "-" -- A subtraction problem.
         * "x" -- A multiplication problem.
+        * "/" -- A division problem.
     @returns A list of 2-tuples.  Each tuple contains the operands for a
         mathematics problem.
     """
@@ -187,6 +205,9 @@ def unique_problems(n: int, kind: str) -> list:
         case "x":
             while len(set(problem)) < n:
                 problem = random_mult_problems()
+        case "/":
+            while len(set(problem)) < n:
+                problem = random_div_problems()
         case "+":
             while len(set(problem)) < n:
                 problem = random_add_problems()
@@ -209,6 +230,7 @@ def main():
     how_many_add = 5
     how_many_sub = 5
     how_many_mult = 10
+    how_many_div = 10
     print("Addition")
     for x, y in unique_problems(how_many_add, "+"):
         print(x, y)
@@ -217,6 +239,9 @@ def main():
         print(x, y)
     print("\nMultiplication")
     for x, y in unique_problems(how_many_mult, "x"):
+        print(x, y)
+    print("\nDivision")
+    for x, y in unique_problems(how_many_div, "/"):
         print(x, y)
 
 if __name__ == "__main__":
