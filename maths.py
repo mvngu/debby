@@ -1,6 +1,7 @@
 ################################################################################
 ## MIT License
 ##
+## Copyright (C) 2024 Aaron Nguyen <amvngu [AT] gmail [DOT] com>
 ## Copyright (C) 2023 Duck McSouls <quacksouls [AT] gmail [DOT] com>
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
