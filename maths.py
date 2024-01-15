@@ -73,8 +73,8 @@ def random_div_problems() -> list:
     """
     Generate random division problems.
 
-    @returns A list of 2-tuples.  Each tuple contains the operands for a
-        division problem.
+    @returns A list of 2-tuples.  Each tuple contains the operand and result for
+        a division problem.
     """
     low = 2
     high = 12
