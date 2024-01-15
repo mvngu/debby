@@ -79,10 +79,8 @@ def random_div_problems() -> list:
     low = 2
     high = 12
     how_many = 10
-    opa = random_operands(low, high, how_many)
-    while len(opa) != len(set(opa)):
-        opa = random_operands(low, high, how_many)
-    opb = random_operands(low, high, how_many)
+    opa = unique_operands(low, high, how_many)
+    opb = unique_operands(low, high, how_many)
     multiple = [a * b for a, b in zip(opa, opb)]
     return list(zip(multiple, opa))
 
@@ -183,6 +181,20 @@ def random_operands(low: int, high: int, how_many: int) -> list:
     @returns A list of random operands.
     """
     return [randint(low, high) for _ in range(how_many)]
+
+def unique_operands(low: int, high: int, how_many: int) -> list:
+    """
+    Generate random, unique operands for a mathematics problem.
+
+    @param low Minimum value for operand.
+    @param high Maximum value for operand.
+    @param how_many How many operands to generate.
+    @returns A list of random, unique operands.
+    """
+    op = random_operands(low, high, how_many)
+    while len(op) != len(set(op)):
+        op = random_operands(low, high, how_many)
+    return op
 
 def unique_problems(n: int, kind: str) -> list:
     """
