@@ -203,7 +203,7 @@ def unique_operands(low: int, high: int, how_many: int) -> list:
     @returns A list of random, unique operands.
     """
     op = random_operands(low, high, how_many)
-    while len(op) != len(set(op)):
+    while not is_unique(op):
         op = random_operands(low, high, how_many)
     return op
 
