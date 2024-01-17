@@ -27,6 +27,15 @@ from random import randint
 
 # Some basic mathematics problems.
 
+def is_unique(ell: list) -> bool:
+    """
+    Whether a list has unique elements.
+
+    @param ell A list.
+    @returns True if all elements in the list are unique; false otherwise.
+    """
+    return len(ell) == len(set(ell))
+
 def is_valid_sub_operands(a: int, b: int) -> bool:
     """
     Whether two numbers are valid subtraction operands.  Two numbers a and b are
@@ -79,9 +88,11 @@ def random_div_problems() -> list:
     low = 2
     high = 12
     how_many = 10
-    opa = unique_operands(low, high, how_many)
-    opb = unique_operands(low, high, how_many)
-    multiple = [a * b for a, b in zip(opa, opb)]
+    multiple = [1, 1, 1]
+    while not is_unique(multiple):
+        opa = unique_operands(low, high, how_many)
+        opb = unique_operands(low, high, how_many)
+        multiple = [a * b for a, b in zip(opa, opb)]
     return list(zip(multiple, opa))
 
 def random_mult_problems() -> list:
