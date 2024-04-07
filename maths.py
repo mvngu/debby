@@ -85,15 +85,29 @@ def random_div_problems() -> list:
     @returns A list of 2-tuples.  Each tuple contains the operand and result for
         a division problem.
     """
-    low = 2
-    high = 12
-    how_many = 10
-    multiple = [1, 1, 1]
-    while not is_unique(multiple):
-        opa = unique_operands(low, high, how_many)
-        opb = unique_operands(low, high, how_many)
-        multiple = [a * b for a, b in zip(opa, opb)]
-    return list(zip(multiple, opa))
+    # Simple problems.
+    easy_low = 2
+    easy_high = 12
+    how_many = 5
+    easy_multiple = [1, 1]
+    easy_opa = []
+    while not is_unique(easy_multiple):
+        easy_opa = unique_operands(easy_low, easy_high, how_many)
+        opb = unique_operands(easy_low, easy_high, how_many)
+        easy_multiple = [a * b for a, b in zip(easy_opa, opb)]
+    # Advanced problems.
+    adv_low = 13
+    adv_high = 20
+    adv_multiple = [1, 1]
+    adv_opa = []
+    while not is_unique(adv_multiple):
+        adv_opa = unique_operands(easy_low, easy_high, how_many)
+        opb = unique_operands(adv_low, adv_high, how_many)
+        adv_multiple = [a * b for a, b in zip(adv_opa, opb)]
+    # All division problems.
+    multiple = easy_multiple + adv_multiple
+    divisor = easy_opa + adv_opa
+    return list(zip(multiple, divisor))
 
 def random_mult_problems() -> list:
     """
