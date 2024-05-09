@@ -23,7 +23,7 @@
 ## SOFTWARE.
 ################################################################################
 
-from random import randint
+from random import choice, randint
 
 # Some basic mathematics problems.
 
@@ -48,35 +48,41 @@ def is_valid_sub_operands(a: int, b: int) -> bool:
 
 def random_add_problems() -> list:
     """
-    Generate random addition problems.
+    Generate random addition problems with unknown summands.
 
-    @returns A list of 2-tuples.  Each tuple contains the operands for an
-        addition problem.
+    @returns A list of 3-tuples of the form: x + y = z.
     """
     # Simple problems
     simple_low = 10
     simple_high = 99
-    simple_n = 2
+    simple_n = 5
     simple_a = random_operands(simple_low, simple_high, simple_n)
     simple_b = random_operands(simple_low, simple_high, simple_n)
 
-    # Intermediate problems
-    inter_low = 100
-    inter_high = 999
-    inter_n = 2
-    inter_a = random_operands(inter_low, inter_high, inter_n)
-    inter_b = random_operands(inter_low, inter_high, inter_n)
+    # # Intermediate problems
+    # inter_low = 100
+    # inter_high = 999
+    # inter_n = 2
+    # inter_a = random_operands(inter_low, inter_high, inter_n)
+    # inter_b = random_operands(inter_low, inter_high, inter_n)
 
-    # Advanced problem
-    adv_low = 1000
-    adv_high = 9999
-    adv_n = 1
-    adv_a = random_operands(adv_low, adv_high, adv_n)
-    adv_b = random_operands(adv_low, adv_high, adv_n)
+    # # Advanced problem
+    # adv_low = 1000
+    # adv_high = 9999
+    # adv_n = 1
+    # adv_a = random_operands(adv_low, adv_high, adv_n)
+    # adv_b = random_operands(adv_low, adv_high, adv_n)
 
-    a = simple_a + inter_a + adv_a
-    b = simple_b + inter_b + adv_b
-    return list(zip(a, b))
+    a = simple_a # + inter_a + adv_a
+    b = simple_b # + inter_b + adv_b
+    c = [x + y for x, y in zip(a, b)]
+    for i in range(len(a)):
+        if choice([True, False]):
+            a[i] = "X"
+        else:
+            b[i] = "X"
+
+    return list(zip(a, b, c))
 
 def random_div_problems() -> list:
     """
@@ -88,22 +94,24 @@ def random_div_problems() -> list:
     # Simple problems.
     easy_low = 2
     easy_high = 12
-    how_many = 5
+    how_many = 6
     easy_multiple = [1, 1]
     easy_opa = []
     while not is_unique(easy_multiple):
         easy_opa = unique_operands(easy_low, easy_high, how_many)
         opb = unique_operands(easy_low, easy_high, how_many)
         easy_multiple = [a * b for a, b in zip(easy_opa, opb)]
+
     # Advanced problems.
     adv_low = 13
-    adv_high = 20
+    adv_high = 40
     adv_multiple = [1, 1]
     adv_opa = []
     while not is_unique(adv_multiple):
         adv_opa = unique_operands(easy_low, easy_high, how_many)
         opb = unique_operands(adv_low, adv_high, how_many)
         adv_multiple = [a * b for a, b in zip(adv_opa, opb)]
+
     # All division problems.
     multiple = easy_multiple + adv_multiple
     divisor = easy_opa + adv_opa
@@ -159,34 +167,33 @@ def __sub_problems() -> list:
     # Simple problems
     simple_low = 10
     simple_high = 99
-    simple_n = 2
+    simple_n = 5
     simple_a = random_operands(simple_low, simple_high, simple_n)
     simple_b = random_operands(simple_low, simple_high, simple_n)
 
-    # Intermediate problems
-    inter_low = 100
-    inter_high = 999
-    inter_n = 2
-    inter_a = random_operands(inter_low, inter_high, inter_n)
-    inter_b = random_operands(inter_low, inter_high, inter_n)
+    # # Intermediate problems
+    # inter_low = 100
+    # inter_high = 999
+    # inter_n = 2
+    # inter_a = random_operands(inter_low, inter_high, inter_n)
+    # inter_b = random_operands(inter_low, inter_high, inter_n)
 
-    # Advanced problem
-    adv_low = 1000
-    adv_high = 9999
-    adv_n = 1
-    adv_a = random_operands(adv_low, adv_high, adv_n)
-    adv_b = random_operands(adv_low, adv_high, adv_n)
+    # # Advanced problem
+    # adv_low = 1000
+    # adv_high = 9999
+    # adv_n = 1
+    # adv_a = random_operands(adv_low, adv_high, adv_n)
+    # adv_b = random_operands(adv_low, adv_high, adv_n)
 
-    a = simple_a + inter_a + adv_a
-    b = simple_b + inter_b + adv_b
+    a = simple_a # + inter_a + adv_a
+    b = simple_b # + inter_b + adv_b
     return list(zip(a, b))
 
 def random_sub_problems() -> list:
     """
-    Generate random subtraction problems.
+    Generate random subtraction problems with unknowns.
 
-    @returns A list of 2-tuples.  Each tuple contains the operands for a
-        subtraction problem.
+    @returns A list of 3-tuples of the form: x - y = z.
     """
     problem = []
     good_problems = False
@@ -194,7 +201,20 @@ def random_sub_problems() -> list:
         problem = __sub_problems()
         valid = [is_valid_sub_operands(x, y) for x, y in problem]
         good_problems = all(valid)
-    return problem
+
+    a = []
+    b = []
+    c = []
+    for x, y in problem:
+        if choice([True, False]):
+            a.append("X")
+            b.append(y)
+        else:
+            a.append(x)
+            b.append("X")
+        c.append(x - y)
+
+    return list(zip(a, b, c))
 
 def random_operands(low: int, high: int, how_many: int) -> list:
     """
@@ -269,11 +289,11 @@ def main():
     how_many_mult = 10
     how_many_div = 10
     print("Addition")
-    for x, y in unique_problems(how_many_add, "+"):
-        print(x, y)
+    for x, y, z in unique_problems(how_many_add, "+"):
+        print("%s + %s = %d" % (str(x), str(y), z))
     print("\nSubtraction")
-    for x, y in unique_problems(how_many_sub, "-"):
-        print(x, y)
+    for x, y, z in unique_problems(how_many_sub, "-"):
+        print("%s - %s = %d" % (str(x), str(y), z))
     print("\nMultiplication")
     for x, y in unique_problems(how_many_mult, "x"):
         print(x, y)
